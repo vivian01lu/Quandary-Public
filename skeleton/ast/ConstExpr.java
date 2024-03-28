@@ -8,6 +8,11 @@ public class ConstExpr extends Expr {
         super(loc);
         this.value = value;
     }
+    //empty constructor for null
+    public ConstExpr(Location loc) {
+        super(loc);
+        this.value = null;
+    }
 
     public Object getValue() {
         return value;
