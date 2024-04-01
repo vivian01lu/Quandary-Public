@@ -57,7 +57,9 @@ public class Cond extends ASTNode{
                 result = expr1.execute(variableMap, funcDefMap) >= expr2.execute(variableMap, funcDefMap);
                 break;
             case 6:
-                result = expr1.execute(variableMap, funcDefMap) == expr2.execute(variableMap, funcDefMap);
+                Long leftVal  =expr1.execute(variableMap, funcDefMap);
+                Long rightVal  = expr2.execute(variableMap, funcDefMap);
+                result = leftVal.equals(rightVal);
                 break;
             case 7:
                 result = expr1.execute(variableMap, funcDefMap) != expr2.execute(variableMap, funcDefMap);
