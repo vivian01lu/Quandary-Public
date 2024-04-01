@@ -2,13 +2,16 @@ package ast;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 public class FuncDef extends ASTNode {
 
     private final VarDecl varDecl;
     private final List<VarDecl> params;
     private final StmtList stmtList;
-    private final HashMap<String,Long> variables = new HashMap<>();
+  
+   
     private final HashMap<String, VarDecl.TYPE> typeMap = new HashMap<>();
 
     public FuncDef(VarDecl varDecl, List<VarDecl> params, List<Stmt> stmtList, Location loc) {
@@ -17,11 +20,7 @@ public class FuncDef extends ASTNode {
         this.params = params;
         this.stmtList = new StmtList(stmtList, loc);
     }
-    // this is for saving every variables'identifier and its value for every function,so when return if you need to get some varible's value, you can get it from here
-    public HashMap<String, Long> getVariables() {
-        return variables;
-    }
-  
+
     public HashMap<String, VarDecl.TYPE> getType() {
         return typeMap;
     }
@@ -46,5 +45,20 @@ public class FuncDef extends ASTNode {
     public String toString() {
         return "function " + varDecl.getType() + " " + varDecl.getIdent() +
                 "(" + params + ") " + stmtList;
+    }
+
+
+    public Long execute(HashMap<String, FuncDef> funcDefMap, List<Long> arList) {
+        HashMap<String,Long> variableMap = new HashMap<>();
+    
+        ReturnStatus returnStatus = new ReturnStatus();
+        returnStatus.setStatus(false);
+        //initialize the parameters
+        for (int i = 0; i < params.size(); i++) {
+            variableMap.put(params.get(i).getIdent(), arList.get(i));
+            typeMap.put(params.get(i).getIdent(), params.get(i).getType());
+        }
+        //execute the function      
+        return stmtList.execute(variableMap, funcDefMap, returnStatus);
     }
 }

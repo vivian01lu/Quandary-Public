@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.HashMap;
+
 public class UnaryMinusExpr extends Expr {
 
     final Expr expr;
@@ -16,4 +18,8 @@ public class UnaryMinusExpr extends Expr {
     public String toString() {
         return "-(" + expr + ")";
     }
+
+      public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        return -expr.execute(variableMap, funcDefMap);
+      }
 }

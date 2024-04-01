@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.HashMap;
+
 public class FunctionCallStmt extends Stmt{
     final FuncCallExpr funcCallExpr;
 
@@ -9,5 +11,9 @@ public class FunctionCallStmt extends Stmt{
     }
     public FuncCallExpr getFCE() {
         return funcCallExpr;
+    }
+
+    public Object executeFucCallStmt(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+        return funcCallExpr.execute(variableMap, funcDefMap);
     }
 }

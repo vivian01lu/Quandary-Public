@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.HashMap;
+
 public class WhileStmt extends Stmt {
     final Cond cond;
     final Stmt stmt;
@@ -16,4 +18,25 @@ public class WhileStmt extends Stmt {
     public Stmt getStmt() {
         return stmt;
     }
+
+     public Long executeWhileStmt(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+        Long result = null;
+        // return 0 indicates false;
+        // return 1 indicates true;
+        boolean conditionValueResult = cond.execute(variableMap, funcDefMap);
+
+        //System.out.println("Run IfStmt, cond = " + cond.toString());
+        //System.out.println("Run IfStmt, conditionValueResult = " + conditionValueResult);
+
+        while(conditionValueResult){
+            //System.out.println("Run IfStmt, isReturn = " + returnStatus.isStatus());
+
+            result = stmt.execute(variableMap, funcDefMap, returnStatus);
+
+            //System.out.println("Run IfStmt, isReturn = " + returnStatus.isStatus() + " ,result = " + result + " after stmt.execute()");
+            conditionValueResult = cond.execute(variableMap, funcDefMap);
+        }
+
+        return result;
+     }
 }

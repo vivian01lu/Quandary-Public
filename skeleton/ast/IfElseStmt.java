@@ -1,5 +1,8 @@
 package ast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class IfElseStmt extends Stmt {
     final Cond cond;
     final Stmt stmt1;
@@ -20,5 +23,18 @@ public class IfElseStmt extends Stmt {
     }
     public Stmt getStmt2() {
         return stmt2;
+    }
+    public Long executeIfElseStatement(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+        Long result = null;
+
+        boolean conditionValueResult = cond.execute(variableMap, funcDefMap);
+
+        if(conditionValueResult){
+            result = stmt1.execute(variableMap, funcDefMap, returnStatus);
+        } else {
+            result = stmt2.execute(variableMap, funcDefMap, returnStatus);
+        }
+
+        return result;
     }
 }

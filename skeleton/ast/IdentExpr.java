@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.HashMap;
+
 public class IdentExpr extends Expr {
 
     final String i;
@@ -17,4 +19,8 @@ public class IdentExpr extends Expr {
     public String toString() {
         return i;
     }
+
+      public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        return variableMap.get(i);
+      }
 }

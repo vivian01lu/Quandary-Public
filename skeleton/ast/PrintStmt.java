@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.HashMap;
+
 public class PrintStmt extends Stmt{
     private final Expr expr;
 
@@ -11,4 +13,14 @@ public class PrintStmt extends Stmt{
     public Expr getExpr() {
         return expr;
     }
+
+    public Long executePrintStatement(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+
+        // Extract information from the print statement
+        Expr expr = this.getExpr();
+        Object value = expr.execute(variableMap, funcDefMap);
+        System.out.println(value);
+        return null;
+    }
+
 }

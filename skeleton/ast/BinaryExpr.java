@@ -8,15 +8,8 @@ public class BinaryExpr extends Expr {
     public static final int PLUS = 1;
     public static final int MINUS = 2;
     public static final int MULTIPLY = 3; // new constant for the multiplication operator
-    public static final int LE = 4;
-    public static final int GE = 5;
-    public static final int EQ = 6;
-    public static final int NE = 7;
-    public static final int LT = 8;
-    public static final int GT = 9;
-    public static final int AND = 10;
-    public static final int OR = 11;
-    public static final int NOT = 0;
+   
+    
 
     final Expr expr1;
     final int operator;
@@ -51,5 +44,21 @@ public class BinaryExpr extends Expr {
             case MULTIPLY: s = "*"; break;
         }
         return "(" + expr1 + " " + s + " " + expr2 + ")";
+    }
+
+    public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        Long result = null;
+        switch (operator) {
+            case PLUS:
+                result = expr1.execute(variableMap, funcDefMap) + expr2.execute(variableMap, funcDefMap);
+                break;
+            case MINUS:
+                result = expr1.execute(variableMap, funcDefMap) - expr2.execute(variableMap, funcDefMap);
+                break;
+            case MULTIPLY:
+                result = expr1.execute(variableMap, funcDefMap) * expr2.execute(variableMap, funcDefMap);
+                break;
+        }
+        return result;
     }
 }

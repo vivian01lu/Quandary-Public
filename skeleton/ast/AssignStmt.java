@@ -1,5 +1,8 @@
 package ast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AssignStmt extends Stmt {
     private String ident;
     private Expr expr;
@@ -14,5 +17,16 @@ public class AssignStmt extends Stmt {
      }
      public String getIdent() {
          return ident;
+     }
+
+     Object executeAssignmentStatement(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+        // Extract information from the assignment statement
+        String ident = this.getIdent();
+        Expr expr = this.getExpr();
+        Object value = expr.execute(variableMap, funcDefMap);
+
+        variableMap.put(ident, (Long)value);
+    
+        return value;
      }
 }

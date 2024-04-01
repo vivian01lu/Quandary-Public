@@ -130,24 +130,23 @@ stmt ::= varDecl:v EQUAL expr:e SEMICOLON
        ;
       
 cond ::= expr:e1 LE expr:e2
-         {: RESULT = new BinaryCond(e1, BinaryExpr.LE, e2, loc(e1left,e1right)); :}
+         {: RESULT = new Cond(e1, Cond.LE, e2, loc(e1left,e1right)); :}
       |  expr:e1 GE expr:e2
-         {: RESULT = new BinaryCond(e1, BinaryExpr.GE, e2, loc(e1left,e1right)); :}
+         {: RESULT = new Cond(e1, Cond.GE, e2, loc(e1left,e1right)); :}
       |  expr:e1 EQ expr:e2
-         {: RESULT = new BinaryCond(e1, BinaryExpr.EQ, e2, loc(e1left,e1right)); :}
+         {: RESULT = new Cond(e1, Cond.EQ, e2, loc(e1left,e1right)); :}
       |  expr:e1 NE expr:e2
-         {: RESULT = new BinaryCond(e1, BinaryExpr.NE, e2, loc(e1left,e1right)); :}
+         {: RESULT = new Cond(e1, Cond.NE, e2, loc(e1left,e1right)); :}
       |  expr:e1 LT expr:e2
-         {: RESULT = new BinaryCond(e1, BinaryExpr.LT, e2, loc(e1left,e1right)); :}
+         {: RESULT = new Cond(e1, Cond.LT, e2, loc(e1left,e1right)); :}
       |  expr:e1 GT expr:e2
-         {: RESULT = new BinaryCond(e1, BinaryExpr.GT, e2, loc(e1left,e1right)); :}
+         {: RESULT = new Cond(e1, Cond.GT, e2, loc(e1left,e1right)); :}
       |  cond:c1 AND cond:c2
-         {: RESULT = new BinaryCond(c1, BinaryExpr.AND, c2, loc(c1left, c1right)); :}
-        
+         {: RESULT = new Cond(c1, Cond.AND, c2, loc(c1left, c1right)); :} 
       |  cond:c1 OR cond:c2
-         {: RESULT = new BinaryCond(c1, BinaryExpr.OR, c2, loc(c1left, c1right)); :}
+         {: RESULT = new Cond(c1, Cond.OR, c2, loc(c1left, c1right)); :}
       |  NOT cond:c
-         {: RESULT = new BinaryCond(c, BinaryExpr.NOT, loc(cleft, cright)); :}
+         {: RESULT = new Cond(c, Cond.NOT, loc(cleft, cright)); :}
           %prec NOT
       |  LPAREN cond:c RPAREN
          {: RESULT = c; :}
