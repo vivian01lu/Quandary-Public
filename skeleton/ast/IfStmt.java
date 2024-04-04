@@ -20,8 +20,8 @@ public class IfStmt extends Stmt {
         return stmt;
     }
 
-     public Long executeIfStatement(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
-        Long result = null;
+     public QVal executeIfStatement(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+        QVal result = null;
         boolean conditionValueResult = cond.execute(variableMap, funcDefMap);
 
         if(conditionValueResult){

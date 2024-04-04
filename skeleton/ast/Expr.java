@@ -8,8 +8,8 @@ public class Expr extends ASTNode {
         super(loc);
     }
 
-    public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap) {
-        Long result = null;
+    public QVal execute(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        QVal result = null;
 
         if (this instanceof ConstExpr) {
             ConstExpr constExpr = (ConstExpr) this;

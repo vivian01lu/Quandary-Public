@@ -9,16 +9,16 @@ public abstract class Stmt extends ASTNode {
         super(loc);
     }
    
-    public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
-        Long result = null;
+    public QVal execute(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+        QVal result = null;
 
         if (this instanceof DeclStmt) {
             DeclStmt declStmt = (DeclStmt) this;
-            result = declStmt.execute(variableMap, funcDefMap, returnStatus);
+            declStmt.execute(variableMap, funcDefMap, returnStatus);
 
         } else if (this instanceof AssignStmt) {
             AssignStmt assignStmt = (AssignStmt) this;
-            result = (Long)assignStmt.executeAssignmentStatement(variableMap, funcDefMap, returnStatus);
+            assignStmt.executeAssignmentStatement(variableMap, funcDefMap, returnStatus);
 
         } else if (this instanceof IfStmt) {
             IfStmt ifStmt = (IfStmt) this;
@@ -34,15 +34,16 @@ public abstract class Stmt extends ASTNode {
 
         } else if (this instanceof PrintStmt) {
             PrintStmt printStmt = (PrintStmt) this;
-            result = printStmt.executePrintStatement(variableMap, funcDefMap, returnStatus);
+            printStmt.executePrintStatement(variableMap, funcDefMap, returnStatus);
 
         } else if (this instanceof BlockStmt) {
             BlockStmt blockStmt = (BlockStmt) this;
-            result = (Long)blockStmt.executeBlockStatement(variableMap, funcDefMap, returnStatus);
+            result = blockStmt.executeBlockStatement(variableMap, funcDefMap, returnStatus);
 
         } else if (this instanceof FunctionCallStmt) {
             FunctionCallStmt callStmt = (FunctionCallStmt) this;
-            result = (Long)callStmt.executeFucCallStmt(variableMap, funcDefMap, returnStatus);
+            QInt vaInt = (QInt)callStmt.executeFucCallStmt(variableMap, funcDefMap, returnStatus);
+            result = vaInt;
 
         } else if (this instanceof ReturnStmt) {
             ReturnStmt returnStmt = (ReturnStmt) this;

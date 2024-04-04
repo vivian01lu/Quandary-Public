@@ -13,12 +13,12 @@ public class ReturnStmt extends Stmt {
   public Expr getExpr() {
       return expr;
   }
-    public Long executeReturnStatement(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+    public QVal executeReturnStatement(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
         // Extract information from the return statement
         Expr expr = this.getExpr();
-        Object value = expr.execute(variableMap, funcDefMap);
+        QVal value = expr.execute(variableMap, funcDefMap);
         returnStatus.setStatus(true);
-        return (Long)value;
+        return value;
     }
 
     // Object executeReturnStatement(ReturnStmt returnStmt,FuncDef func,HashMap<String, Long> insideMap) {

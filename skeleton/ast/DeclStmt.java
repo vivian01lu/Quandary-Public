@@ -21,13 +21,13 @@ public class DeclStmt extends Stmt {
         return expr;
     }
 
-      public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+      public QVal execute(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
         // Extract information from the declaration statement
         String varName = this.getVarDecl().getIdent().toString();
         Expr expr = this.getExpr();
-        Object value = expr.execute(variableMap, funcDefMap);
+        QVal value = expr.execute(variableMap, funcDefMap);
         //if the stmt is "int a  = arg" then put "a"-"18" to the hashmap
-        variableMap.put(varName,(Long) value);
+        variableMap.put(varName,value);
         return null;
       }
 }

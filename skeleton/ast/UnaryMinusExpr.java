@@ -19,7 +19,8 @@ public class UnaryMinusExpr extends Expr {
         return "-(" + expr + ")";
     }
 
-      public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap) {
-        return -expr.execute(variableMap, funcDefMap);
+      public QVal execute(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        QInt val = (QInt)(expr.execute(variableMap, funcDefMap));
+        return new QInt(-val.getValue());
       }
 }

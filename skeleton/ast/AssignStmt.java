@@ -19,14 +19,14 @@ public class AssignStmt extends Stmt {
          return ident;
      }
 
-     Object executeAssignmentStatement(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+    public void executeAssignmentStatement(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
         // Extract information from the assignment statement
         String ident = this.getIdent();
         Expr expr = this.getExpr();
-        Object value = expr.execute(variableMap, funcDefMap);
+        QVal value = expr.execute(variableMap, funcDefMap);
 
-        variableMap.put(ident, (Long)value);
+        variableMap.put(ident, value);
     
-        return value;
+       
      }
 }

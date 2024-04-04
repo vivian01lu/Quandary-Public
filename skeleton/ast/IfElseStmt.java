@@ -24,8 +24,8 @@ public class IfElseStmt extends Stmt {
     public Stmt getStmt2() {
         return stmt2;
     }
-    public Long executeIfElseStatement(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
-        Long result = null;
+    public QVal executeIfElseStatement(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+        QVal result = null;
 
         boolean conditionValueResult = cond.execute(variableMap, funcDefMap);
 

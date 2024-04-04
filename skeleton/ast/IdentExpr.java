@@ -20,7 +20,7 @@ public class IdentExpr extends Expr {
         return i;
     }
 
-      public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap) {
+      public QVal execute(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
         return variableMap.get(i);
       }
 }

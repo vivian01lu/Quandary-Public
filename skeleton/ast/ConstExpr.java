@@ -20,7 +20,13 @@ public class ConstExpr extends Expr {
         return value;
     }
 
-    public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap) {
-        return (Long) value;
+    public QVal execute(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        QVal result = null;
+        if (((ConstExpr)this).getValue() instanceof Long){
+            result = new QInt((Long)((ConstExpr)this).getValue());
+        }else if (((ConstExpr)this).getValue() == null){
+            result =new QRef(null);
+        }
+        return result;
     }
 }

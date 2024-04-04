@@ -19,8 +19,8 @@ public class WhileStmt extends Stmt {
         return stmt;
     }
 
-     public Long executeWhileStmt(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
-        Long result = null;
+     public QVal executeWhileStmt(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+        QVal result = null;
         // return 0 indicates false;
         // return 1 indicates true;
         boolean conditionValueResult = cond.execute(variableMap, funcDefMap);

@@ -50,20 +50,31 @@ public class BinaryExpr extends Expr {
         return "(" + expr1 + " " + s + " " + expr2 + ")";
     }
 
-    public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap) {
-        Long result = null;
+    public QVal execute(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        QVal result = null;
+       
         switch (operator) {
             case PLUS:
-                result = expr1.execute(variableMap, funcDefMap) + expr2.execute(variableMap, funcDefMap);
+                QInt left1 = (QInt)expr1.execute(variableMap, funcDefMap);
+                QInt right1 = (QInt)expr2.execute(variableMap, funcDefMap);
+                result = new QInt(left1.getValue() + right1.getValue());
                 break;
             case MINUS:
-                result = expr1.execute(variableMap, funcDefMap) - expr2.execute(variableMap, funcDefMap);
+                QInt left2 = (QInt)expr1.execute(variableMap, funcDefMap);
+                QInt right2 = (QInt)expr2.execute(variableMap, funcDefMap);
+                result = new QInt(left2.getValue() - right2.getValue());
                 break;
             case MULTIPLY:
-                result = expr1.execute(variableMap, funcDefMap) * expr2.execute(variableMap, funcDefMap);
+                QInt left3 = (QInt)expr1.execute(variableMap, funcDefMap);
+                QInt right3 = (QInt)expr2.execute(variableMap, funcDefMap);
+                result = new QInt(left3.getValue() * right3.getValue());
                 break;
             case DOT:
-                
+               //using QRef()
+               QVal left = expr1.execute(variableMap, funcDefMap);
+               QVal right = expr2.execute(variableMap, funcDefMap);
+               return new QRef(new QObj(left, right));
+
         }
         return result;
     }

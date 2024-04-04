@@ -15,8 +15,8 @@ public class BlockStmt extends Stmt {
         return sl;
     }
 
-    Object executeBlockStatement(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
-        Long result = null;
+    QVal executeBlockStatement(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+        QVal result = null;
         for (int i = 0; i < sl.size() && !returnStatus.isStatus(); i++) {
             result = sl.get(i).execute(variableMap, funcDefMap, returnStatus);
         }

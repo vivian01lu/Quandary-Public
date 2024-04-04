@@ -22,8 +22,8 @@ public class StmtList extends ASTNode {
         return this.loc;
     }
 
-    public Long execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
-        Long result = null;
+    public QVal execute(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+        QVal result = null;
         //as long as returnStatus.isStatus() == false we will keep executing the statements
         for (int i = 0; i < sl.size() && !returnStatus.isStatus(); i++) {
             result = sl.get(i).execute(variableMap, funcDefMap, returnStatus);

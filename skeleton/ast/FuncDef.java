@@ -48,11 +48,11 @@ public class FuncDef extends ASTNode {
     }
 
 
-    public Long execute(HashMap<String, FuncDef> funcDefMap, List<Long> arList) {
-        HashMap<String,Long> variableMap = new HashMap<>();
-    
+    public QVal execute(HashMap<String, FuncDef> funcDefMap, List<QVal> arList) {
+        HashMap<String,QVal> variableMap = new HashMap<>();
         ReturnStatus returnStatus = new ReturnStatus();
         returnStatus.setStatus(false);
+
         //initialize the parameters
         for (int i = 0; i < params.size(); i++) {
             variableMap.put(params.get(i).getIdent(), arList.get(i));

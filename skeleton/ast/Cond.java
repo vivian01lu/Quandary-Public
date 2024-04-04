@@ -47,28 +47,41 @@ public class Cond extends ASTNode{
         this.cond2 = null;
     }
    
-    public boolean execute(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap) {
+    public boolean execute(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
         boolean result = false;
+        QInt leftCond;
+        QInt rightCond;
         switch (operator) {
             case 4:
-                result = expr1.execute(variableMap, funcDefMap) <= expr2.execute(variableMap, funcDefMap);
+                leftCond = (QInt)expr1.execute(variableMap, funcDefMap);
+                rightCond = (QInt)expr2.execute(variableMap, funcDefMap);
+                result = leftCond.getValue() <= rightCond.getValue();
                 break;
             case 5:
-                result = expr1.execute(variableMap, funcDefMap) >= expr2.execute(variableMap, funcDefMap);
+                leftCond = (QInt)expr1.execute(variableMap, funcDefMap);
+                rightCond = (QInt)expr2.execute(variableMap, funcDefMap);
+                result =  leftCond.getValue() >= rightCond.getValue();
                 break;
             case 6:
-                Long leftVal  =expr1.execute(variableMap, funcDefMap);
-                Long rightVal  = expr2.execute(variableMap, funcDefMap);
-                result = leftVal.equals(rightVal);
+                leftCond = (QInt)expr1.execute(variableMap, funcDefMap);
+                rightCond = (QInt)expr2.execute(variableMap, funcDefMap);
+                result = leftCond.getValue().equals(rightCond.getValue());
                 break;
             case 7:
-                result = expr1.execute(variableMap, funcDefMap) != expr2.execute(variableMap, funcDefMap);
+                leftCond = (QInt)expr1.execute(variableMap, funcDefMap);
+                rightCond = (QInt)expr2.execute(variableMap, funcDefMap);
+                result = !leftCond.getValue().equals(rightCond.getValue());
+              
                 break;
             case 8:
-                result = expr1.execute(variableMap, funcDefMap) < expr2.execute(variableMap, funcDefMap);
+                leftCond = (QInt)expr1.execute(variableMap, funcDefMap);
+                rightCond = (QInt)expr2.execute(variableMap, funcDefMap);
+                result = leftCond.getValue() < rightCond.getValue();
                 break;
             case 9:
-                result = expr1.execute(variableMap, funcDefMap) > expr2.execute(variableMap, funcDefMap);
+                leftCond = (QInt)expr1.execute(variableMap, funcDefMap);
+                rightCond = (QInt)expr2.execute(variableMap, funcDefMap);
+                result = leftCond.getValue() > rightCond.getValue();
                 break;
             case 10:
                 result = cond1.execute(variableMap, funcDefMap) && cond2.execute(variableMap, funcDefMap);

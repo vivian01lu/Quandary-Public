@@ -13,7 +13,7 @@ public class FunctionCallStmt extends Stmt{
         return funcCallExpr;
     }
 
-    public Object executeFucCallStmt(HashMap<String, Long> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
+    public QVal executeFucCallStmt(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
         return funcCallExpr.execute(variableMap, funcDefMap);
     }
 }
