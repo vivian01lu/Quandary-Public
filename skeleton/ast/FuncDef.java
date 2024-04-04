@@ -2,17 +2,17 @@ package ast;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+
 
 public class FuncDef extends ASTNode {
 
     private final VarDecl varDecl;
     private final List<VarDecl> params;
     private final StmtList stmtList;
+    final HashMap<String, Boolean> mutMap = new HashMap<>();
   
    
-    private final HashMap<String, VarDecl.TYPE> typeMap = new HashMap<>();
+    private final HashMap<String, Type.TYPE> typeMap = new HashMap<>();
 
     public FuncDef(VarDecl varDecl, List<VarDecl> params, List<Stmt> stmtList, Location loc) {
         super(loc);
@@ -21,8 +21,12 @@ public class FuncDef extends ASTNode {
         this.stmtList = new StmtList(stmtList, loc);
     }
 
-    public HashMap<String, VarDecl.TYPE> getType() {
+    public HashMap<String, Type.TYPE> getType() {
         return typeMap;
+    }
+    //this map is to help to check if the variable is mutable or not
+    public HashMap<String, Boolean> mutMap() {
+        return mutMap;
     }
 
     public VarDecl getVarDecl() {
@@ -55,8 +59,17 @@ public class FuncDef extends ASTNode {
 
         //initialize the parameters
         for (int i = 0; i < params.size(); i++) {
-            variableMap.put(params.get(i).getIdent(), arList.get(i));
-            typeMap.put(params.get(i).getIdent(), params.get(i).getType());
+            
+            VarDecl varDecl = params.get(i);
+            if (varDecl.IsMut()){
+                //save the mutability of variables in the mutMap
+                this.mutMap().put(varDecl.getIdent(), true);
+            } else{
+                this.mutMap().put(varDecl.getIdent(), false);
+            }
+            //save the parameters in the variableMap and typeMap
+            variableMap.put(varDecl.getIdent(), arList.get(i));
+            typeMap.put(varDecl.getIdent(), params.get(i).getType());
         }
         //execute the function      
         return stmtList.execute(variableMap, funcDefMap, returnStatus);

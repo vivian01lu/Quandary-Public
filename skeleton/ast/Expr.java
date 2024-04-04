@@ -19,7 +19,12 @@ public class Expr extends ASTNode {
             IdentExpr idExpr = (IdentExpr) this;
             result = idExpr.execute(variableMap, funcDefMap);
 
-        } else if (this instanceof UnaryMinusExpr) {
+        } else if (this instanceof TypeCastExpr) {
+            TypeCastExpr castExpr = (TypeCastExpr) this;
+            result = castExpr.execute(variableMap, funcDefMap);
+
+        }
+        else if (this instanceof UnaryMinusExpr) {
             UnaryMinusExpr unaryExpr = (UnaryMinusExpr) this;
             result = unaryExpr.execute(variableMap, funcDefMap);
 

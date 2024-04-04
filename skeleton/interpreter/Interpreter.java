@@ -134,14 +134,16 @@ public class Interpreter {
             }
 
         }
-        //use a list to args in the main function
+        //use a list to save all args in the main function
         List<QVal> argsList = new ArrayList<>();
-        argsList.add(arg);
+        argsList.add(arg);//for now it
   
         QVal result = mainFunc.execute(funcDefMap, argsList);
     
+
        return result;
     }
+
 	public static void fatalError(String message, int processReturnCode) {
         System.out.println(message);
         System.exit(processReturnCode);

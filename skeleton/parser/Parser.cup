@@ -28,11 +28,12 @@ parser code {:
 :};
 
 
-terminal PLUS, MINUS, LPAREN, RPAREN, MULTIPLY,  RETURN, SEMICOLON, COMMA, Q,REF, PRINT, DOT, MUT,NIL;
+terminal PLUS, MINUS, LPAREN, RPAREN, MULTIPLY,  RETURN, SEMICOLON, COMMA, PRINT, DOT, MUT,NIL;
 terminal LE, GE, EQ, NE, LT, GT, AND, OR, NOT;
 terminal Long    INTCONST;
 terminal String   IDENT;
-terminal IF, ELSE, WHILE, EQUAL, INT, LBRACE, RBRACE;
+terminal IF, ELSE, WHILE, EQUAL, LBRACE, RBRACE;
+terminal INT, Q, REF;
 
 
 non terminal Program program;
@@ -41,7 +42,7 @@ non terminal FuncDef funcDef;
 non terminal List<VarDecl>    formalDeclList;
 non terminal List<VarDecl>    neFormalDeclList;
 non terminal VarDecl varDecl;
-non terminal VarDecl.TYPE type;
+non terminal Type.TYPE type;
 non terminal List<Stmt>      stmtList;
 non terminal Stmt stmt;
 non terminal Cond cond;
@@ -93,15 +94,17 @@ neFormalDeclList ::= varDecl:v COMMA neFormalDeclList:nfdl
                   ;
 
 varDecl ::= type:t IDENT:i
-            {: RESULT = new VarDecl(t, i, loc(tleft, tright)); :}
+            {: RESULT = new VarDecl(false, t, i, loc(tleft, tright)); :}
+             | MUT type:t IDENT:i
+            {: RESULT = new VarDecl(true, t, i, loc(tleft, tright)); :}
          ;
 
 type ::=  INT
-         {: RESULT = VarDecl.TYPE.INT; :}
+         {: RESULT = Type.TYPE.INT; :}
       | Q
-         {: RESULT = VarDecl.TYPE.Q; :}
+         {: RESULT = Type.TYPE.Q; :}
       | REF
-         {: RESULT = VarDecl.TYPE.REF; :}
+         {: RESULT = Type.TYPE.REF; :}
       ;
 
 stmtList ::= stmt:st stmtList:sl

@@ -66,12 +66,13 @@ white_space = {new_line} | [ \t\f]
 "if"              { return symbol("if", IF); }
 "else"            { return symbol("else", ELSE); }
 
+"nil"             { return symbol("nil", NIL); }
+"."               { return symbol(".",  DOT); }
 "while"           { return symbol("while", WHILE); }
 "mutable"         { return symbol("mutable", MUT); }
 "Q"               { return symbol("Q", Q); }
 "Ref"             { return symbol("Ref", REF); }
-"nil"             { return symbol("nil", NIL); }
-"."               { return symbol(".",  DOT); }
+
 
 {IntLiteral} { return symbol("Intconst", INTCONST, Long.parseLong(yytext())); }
 
