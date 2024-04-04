@@ -32,9 +32,9 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-//               args = new String[2];
-//               args[0] = "examples/prodigy.q";
-//               args[1] = "35";
+               args = new String[2];
+               args[0] = "examples/ssetRightandLeft.q";
+               args[1] = "42";
 
         String gcType = "NoGC"; // default for skeleton, which only supports NoGC
         long heapBytes = 1 << 14;

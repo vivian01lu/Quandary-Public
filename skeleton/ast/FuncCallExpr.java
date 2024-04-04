@@ -60,30 +60,32 @@ public class FuncCallExpr extends Expr {
                 //setLeft(e1,e2) sets the left field of the reference e1 to the value of e2
                 Expr e1 = arguments.get(0);
                 Expr e2 = arguments.get(1);
-                setLeft(e1, e2 ,variableMap ,funcDefMap);
+                return setLeft(e1, e2 ,variableMap ,funcDefMap);
               
             }else if(this.getFuncName().equals("setRight")){
                 //setRight(e1,e2) sets the right field of the reference e1 to the value of e2
                 Expr e1 = arguments.get(0);
                 Expr e2 = arguments.get(1);
-                setRight(e1, e2, variableMap, funcDefMap);
+                return setRight(e1, e2, variableMap, funcDefMap);
               
             }else if (this.getFuncName().equals("isAtom")) {
                 //isAtom(e) returns 1 if e is an atom, and 0 otherwise
                 Expr e = arguments.get(0);
-               
+                return isAtom(e, variableMap, funcDefMap);
             }
             
             return curFucDef.execute(funcDefMap, paramlist);  
     }
 
-    void setLeft (Expr e1, Expr e2,HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
+    QInt setLeft (Expr e1, Expr e2,HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
         QRef ref = (QRef)e1.execute(variableMap, funcDefMap);
         ref.referent.left = e2.execute(variableMap, funcDefMap);
+        return new QInt(1);
     }
-    void setRight (Expr e1, Expr e2,HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
+    QInt setRight (Expr e1, Expr e2,HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
         QRef ref = (QRef)e1.execute(variableMap, funcDefMap);
         ref.referent.right = e2.execute(variableMap, funcDefMap);
+        return new QInt(1);
     }
 
     QInt isNil(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap ){
