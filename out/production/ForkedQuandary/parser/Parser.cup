@@ -33,7 +33,7 @@ terminal LE, GE, EQ, NE, LT, GT, AND, OR, NOT;
 terminal Long    INTCONST;
 terminal String   IDENT;
 terminal IF, ELSE, WHILE, EQUAL, LBRACE, RBRACE;
-terminal INT, Q, REF;
+terminal INT, Q, REF, CAST;
 
 
 non terminal Program program;
@@ -62,6 +62,7 @@ precedence left LE, GE, EQ, NE, LT, GT;
 precedence left DOT;
 precedence left PLUS, MINUS;
 precedence left MULTIPLY;
+precedence left CAST;
 
 
 
@@ -170,6 +171,9 @@ expr ::=  NIL:n
          {: RESULT = e; :}
       |  funcCallExpr:fce
          {: RESULT = fce; :}
+      |  LPAREN type:t RPAREN expr:e
+         {: RESULT = new TypeCastExpr(t, e, loc(tleft, tright)); :}
+         %prec CAST
       ;
    
 

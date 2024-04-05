@@ -7,5 +7,8 @@ public class QRef extends QVal{
         this.referent = referent;
     }
 
-   
+    public String toString() {
+        if (referent == null) return "nil";
+        else return referent.toString();
+    }
 }

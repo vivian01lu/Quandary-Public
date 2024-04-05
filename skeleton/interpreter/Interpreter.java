@@ -32,15 +32,15 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-               args = new String[2];
-               args[0] = "examples/ssetRightandLeft.q";
-               args[1] = "42";
+//                args = new String[2];
+//                args[0] = "examples/flip.q";
+//                args[1] = "4";
 
         String gcType = "NoGC"; // default for skeleton, which only supports NoGC
         long heapBytes = 1 << 14;
         int i = 0;
         String filename;
-        QVal quandaryArg;
+        long quandaryArg;
         try {
             for (; i < args.length; i++) {
                 String arg = args[i];
@@ -62,7 +62,7 @@ public class Interpreter {
                 }
             }
             filename = args[i];
-            quandaryArg =  new QInt(Long.valueOf(args[i + 1]));
+            quandaryArg = Long.valueOf(args[i + 1]);
         } catch (Exception ex) {
             System.out.println("Expected format: quandary [OPTIONS] QUANDARY_PROGRAM_FILE INTEGER_ARGUMENT");
             System.out.println("Options:");
@@ -88,7 +88,7 @@ public class Interpreter {
         //astRoot.println(System.out);
         interpreter = new Interpreter(astRoot);
         interpreter.initMemoryManager(gcType, heapBytes);
-        String returnValueAsString = interpreter.executeRoot(astRoot, quandaryArg).toString();
+        String returnValueAsString = interpreter.executeRoot(astRoot, new QInt(quandaryArg)).toString();
         System.out.println("Interpreter returned " + returnValueAsString);
     }
 
@@ -139,9 +139,8 @@ public class Interpreter {
         argsList.add(arg);//for now it
   
         QVal result = mainFunc.execute(funcDefMap, argsList);
-    
 
-       return result;
+      return result;
     }
 
 	public static void fatalError(String message, int processReturnCode) {

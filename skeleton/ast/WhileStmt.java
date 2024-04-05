@@ -32,9 +32,12 @@ public class WhileStmt extends Stmt {
             //System.out.println("Run IfStmt, isReturn = " + returnStatus.isStatus());
 
             result = stmt.execute(variableMap, funcDefMap, returnStatus);
-
-            //System.out.println("Run IfStmt, isReturn = " + returnStatus.isStatus() + " ,result = " + result + " after stmt.execute()");
-            conditionValueResult = cond.execute(variableMap, funcDefMap);
+            if(returnStatus.isStatus() == false){
+                //System.out.println("Run IfStmt, isReturn = " + returnStatus.isStatus() + " ,result = " + result + " after stmt.execute()");
+                conditionValueResult = cond.execute(variableMap, funcDefMap);
+            }else{
+                return result;
+            }
         }
 
         return result;

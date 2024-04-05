@@ -1,6 +1,6 @@
 package ast;
 
-public class QObj{
+public class QObj extends QVal{
     QVal left;
     QVal right;
     //constructor
@@ -17,4 +17,20 @@ public class QObj{
         return right;
     }
 
+
+    public String toString() {
+        String leftStr = "";
+        if (left == null){
+            leftStr = "nil";
+        }else {
+            leftStr = left.toString();
+        }
+        String rightStr = "";
+        if (right == null){
+            rightStr = "nil";
+        }else {
+            rightStr = right.toString();
+        }
+        return "("+ leftStr + " . " +  rightStr +")";
+    }
 }

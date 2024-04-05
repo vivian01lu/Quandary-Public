@@ -27,7 +27,6 @@ int binarySearch(Ref list, int k){
 	return 0;
 }
 
-
 mutable Ref add(Ref list, Q elem) {
   if (isNil(list) != 0) {
     return elem . nil;
