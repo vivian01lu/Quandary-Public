@@ -32,9 +32,9 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-//                args = new String[2];
-//                args[0] = "examples/flip.q";
-//                args[1] = "4";
+                // args = new String[2];
+                // args[0] = "examples/randomList.q";
+                // args[1] = "1";
 
         String gcType = "NoGC"; // default for skeleton, which only supports NoGC
         long heapBytes = 1 << 14;
@@ -147,4 +147,55 @@ public class Interpreter {
         System.out.println(message);
         System.exit(processReturnCode);
 	}
+
+    static  public QInt setLeft (Expr e1, Expr e2,HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        QRef ref = (QRef)e1.execute(variableMap, funcDefMap);
+        ref.referent.left = e2.execute(variableMap, funcDefMap);
+        return new QInt(1);
+    }
+    static public QInt setRight (Expr e1, Expr e2,HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        QRef ref = (QRef)e1.execute(variableMap, funcDefMap);
+        ref.referent.right = e2.execute(variableMap, funcDefMap);
+        return new QInt(1);
+    }
+
+    static  public QInt isNil(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap ){
+        QVal qVal = e.execute(variableMap, funcDefMap);
+        if(qVal instanceof QInt){
+            return new QInt(1);
+        }else if(qVal instanceof QRef){
+            QRef ref = (QRef)qVal;
+            if(ref.referent == null){
+                return new QInt(1);
+            }
+        }
+        return new QInt(0);
+    }
+    static public QVal left(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
+        QRef ref = (QRef)e.execute(variableMap, funcDefMap);
+        QVal leftQVal = ref.referent.getLeft();
+        return leftQVal;
+    }
+    static  public QVal right(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
+        QRef ref = (QRef)e.execute(variableMap, funcDefMap);
+        QVal rightQVal = ref.referent.getRight();
+        return rightQVal;
+    }
+
+    static public QInt random(){
+        Random rand = new Random();
+        int randomNum = rand.nextInt(100);
+        return new QInt(randomNum);//return a random number
+    }
+
+    static public QInt isAtom(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
+        QVal qVal = e.execute(variableMap, funcDefMap);
+        if(qVal instanceof QInt){
+            return new QInt(1);
+        }else if(qVal instanceof QRef){
+            return isNil(e,variableMap,funcDefMap);
+        }
+        return new QInt(0);
+    }
+
 }

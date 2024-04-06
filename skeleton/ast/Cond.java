@@ -84,10 +84,16 @@ public class Cond extends ASTNode{
                 result = leftCond.getValue() > rightCond.getValue();
                 break;
             case 10:
-                result = cond1.execute(variableMap, funcDefMap) && cond2.execute(variableMap, funcDefMap);
+                if(cond1.execute(variableMap, funcDefMap) == false){
+                    return false;
+                }
+                result = cond2.execute(variableMap, funcDefMap);
                 break;
             case 11:
-                result = cond1.execute(variableMap, funcDefMap) || cond2.execute(variableMap, funcDefMap);
+                if(cond1.execute(variableMap, funcDefMap)){
+                    return true;
+                }
+                result = cond2.execute(variableMap, funcDefMap);
                 break;
             case 0:
                 result = !cond1.execute(variableMap, funcDefMap);

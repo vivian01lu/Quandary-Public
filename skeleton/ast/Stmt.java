@@ -42,9 +42,8 @@ public abstract class Stmt extends ASTNode {
 
         } else if (this instanceof FunctionCallStmt) {
             FunctionCallStmt callStmt = (FunctionCallStmt) this;
-            QInt vaInt = (QInt)callStmt.executeFucCallStmt(variableMap, funcDefMap, returnStatus);
-            result = vaInt;
-
+            result = callStmt.executeFucCallStmt(variableMap, funcDefMap, returnStatus);
+            
         } else if (this instanceof ReturnStmt) {
             ReturnStmt returnStmt = (ReturnStmt) this;
             result = returnStmt.executeReturnStatement(variableMap, funcDefMap, returnStatus);

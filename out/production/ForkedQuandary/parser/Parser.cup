@@ -129,10 +129,10 @@ stmt ::= varDecl:v EQUAL expr:e SEMICOLON
           {: RESULT = new BlockStmt(sl, loc(slleft, slright)); :}
        |  PRINT expr:e SEMICOLON
          {: RESULT = new PrintStmt(e, loc(eleft, eright)); :}
-       |  funcCallExpr:fce SEMICOLON
-         {: RESULT = new FunctionCallStmt(fce, loc(fceleft, fceright)); :}
+       |  IDENT:i LPAREN exprList:e RPAREN SEMICOLON
+         {: RESULT = new FunctionCallStmt(i, e, loc(eleft, eright)); :}
        ;
-      
+
 cond ::= expr:e1 LE expr:e2
          {: RESULT = new Cond(e1, Cond.LE, e2, loc(e1left,e1right)); :}
       |  expr:e1 GE expr:e2
@@ -158,7 +158,7 @@ cond ::= expr:e1 LE expr:e2
 
 
 expr ::=  NIL:n
-         {: RESULT = new ConstExpr(loc(nleft, nright)); :}
+         {: RESULT = new NilExpr(loc(nleft, nright)); :}
       |  INTCONST:c
          {: RESULT = new ConstExpr(c, loc(cleft, cright)); :}
       |  IDENT:c

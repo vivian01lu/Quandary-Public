@@ -1,8 +1,8 @@
 package ast;
 
 public class QObj extends QVal{
-    QVal left;
-    QVal right;
+    public QVal left;
+    public QVal right;
     //constructor
     public QObj(QVal left, QVal right) {
         this.left = left;
