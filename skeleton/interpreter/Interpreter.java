@@ -32,9 +32,9 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-                // args = new String[2];
-                // args[0] = "examples/randomList.q";
-                // args[1] = "1";
+                //  args = new String[2];
+                //  args[0] = "examples/listoflists2.q";
+                //  args[1] = "1";
 
         String gcType = "NoGC"; // default for skeleton, which only supports NoGC
         long heapBytes = 1 << 14;
@@ -162,7 +162,7 @@ public class Interpreter {
     static  public QInt isNil(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap ){
         QVal qVal = e.execute(variableMap, funcDefMap);
         if(qVal instanceof QInt){
-            return new QInt(1);
+            return new QInt(0);
         }else if(qVal instanceof QRef){
             QRef ref = (QRef)qVal;
             if(ref.referent == null){
