@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class ConstExpr extends Expr {
 
-    final Object value;
+    final Long value;
 
     public ConstExpr(long value, Location loc) {
         super(loc);
@@ -16,7 +16,7 @@ public class ConstExpr extends Expr {
         this.value = null;
     }
 
-    public Object getValue() {
+    public Long getValue() {
         return value;
     }
 

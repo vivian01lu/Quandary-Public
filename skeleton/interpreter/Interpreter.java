@@ -32,9 +32,9 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-                //  args = new String[2];
-                //  args[0] = "examples/listoflists2.q";
-                //  args[1] = "1";
+                //    args = new String[2];
+                //    args[0] = "examples/randomList.q";
+                //    args[1] = "3";
 
         String gcType = "NoGC"; // default for skeleton, which only supports NoGC
         long heapBytes = 1 << 14;
@@ -161,9 +161,7 @@ public class Interpreter {
 
     static  public QInt isNil(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap ){
         QVal qVal = e.execute(variableMap, funcDefMap);
-        if(qVal instanceof QInt){
-            return new QInt(0);
-        }else if(qVal instanceof QRef){
+        if(qVal instanceof QRef){
             QRef ref = (QRef)qVal;
             if(ref.referent == null){
                 return new QInt(1);
@@ -176,16 +174,22 @@ public class Interpreter {
         QVal leftQVal = ref.referent.getLeft();
         return leftQVal;
     }
-    static  public QVal right(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
+    static public QVal right(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
         QRef ref = (QRef)e.execute(variableMap, funcDefMap);
         QVal rightQVal = ref.referent.getRight();
         return rightQVal;
     }
 
-    static public QInt random(){
-        Random rand = new Random();
-        int randomNum = rand.nextInt(100);
-        return new QInt(randomNum);//return a random number
+    static public QInt randomInt(Expr e,HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
+        if (e instanceof ConstExpr){
+            ConstExpr constExpr = (ConstExpr)e;
+            Long val = constExpr.getValue();  
+            
+            Random rand = new Random();
+            int randomNum = rand.nextInt(Integer.parseInt(val.toString() ));
+            return new QInt(randomNum);//return a random number
+        }
+        return new QInt(0);
     }
 
     static public QInt isAtom(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){

@@ -33,7 +33,8 @@ public class FunctionCallStmt extends Stmt{
   
     public QVal executeFucCallStmt(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap, ReturnStatus returnStatus) {
              if (this.getFuncName().equals("randomInt")) {
-                return Interpreter.random();
+                 Expr e  = arguments.get(0);
+                return Interpreter.randomInt(e, variableMap, funcDefMap);
               
             }else if (this.getFuncName().equals("left")) {
                 Expr e  = arguments.get(0);

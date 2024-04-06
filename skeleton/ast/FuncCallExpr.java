@@ -44,7 +44,8 @@ public class FuncCallExpr extends Expr {
 
             //check for quandary built-in functions
             if (this.getFuncName().equals("randomInt")) {
-                return Interpreter.random();
+                Expr e  = arguments.get(0);
+                return Interpreter.randomInt(e,variableMap, funcDefMap);
               
             }else if (this.getFuncName().equals("left")) {
                 Expr e  = arguments.get(0);

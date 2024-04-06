@@ -10,11 +10,11 @@ public class QObj extends QVal{
     }
     //get left and right
     public QVal getLeft() {
-        return left;
+        return this.left;
     }
 
     public QVal getRight() {
-        return right;
+        return this.right;
     }
 
 
