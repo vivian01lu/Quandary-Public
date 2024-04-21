@@ -64,6 +64,12 @@ public class FunctionCallStmt extends Stmt{
                 //isAtom(e) returns 1 if e is an atom, and 0 otherwise
                 Expr e = arguments.get(0);
                 return Interpreter.isAtom(e, variableMap, funcDefMap);
+            }else if(this.getFuncName().equals("acq")){
+                Expr e = arguments.get(0);
+                return Interpreter.acq(e, variableMap, funcDefMap);
+            }else if(this.getFuncName().equals("rel")){
+                Expr e = arguments.get(0);
+                return Interpreter.rel(e, variableMap, funcDefMap);
             }
 
             FuncCallExpr callExpr = new FuncCallExpr(this.getFuncName(), this.getExprList(), this.getLoc());

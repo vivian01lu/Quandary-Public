@@ -32,9 +32,9 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-                //    args = new String[2];
-                //    args[0] = "examples/randomList.q";
-                //    args[1] = "3";
+                     args = new String[2];
+                     args[0] = "examples/steps6.q";
+                     args[1] = "1";
 
         String gcType = "NoGC"; // default for skeleton, which only supports NoGC
         long heapBytes = 1 << 14;
@@ -202,4 +202,16 @@ public class Interpreter {
         return new QInt(0);
     }
 
+    static public QInt acq(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
+        QRef q1 = (QRef)e.execute(variableMap, funcDefMap);
+        QObj obj = q1.referent;
+        obj.acq();
+        return new QInt(1);
+    }
+    static public QInt rel(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
+        QRef q2 = (QRef)e.execute(variableMap, funcDefMap);
+        QObj obj = q2.referent;
+        obj.rel();
+        return new QInt(1);
+    }
 }

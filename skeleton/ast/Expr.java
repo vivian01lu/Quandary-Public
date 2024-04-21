@@ -38,8 +38,11 @@ public class Expr extends ASTNode {
         }else if(this instanceof NilExpr){
             NilExpr nilExpr = (NilExpr) this;
             result = nilExpr.execute(variableMap, funcDefMap);
+        }else if(this instanceof ConcurExpr){
+            ConcurExpr concurExpr = (ConcurExpr) this;
+            result = concurExpr.executeConcurrency(variableMap, funcDefMap);
         }
-
         return result;
+    
     }
 }

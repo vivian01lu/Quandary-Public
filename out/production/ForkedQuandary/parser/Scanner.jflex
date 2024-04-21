@@ -83,6 +83,8 @@ white_space = {new_line} | [ \t\f]
 ")"               { return symbol(")",  RPAREN); }
 "{"               { return symbol("{", LBRACE); }
 "}"               { return symbol("}", RBRACE); }
+"["               { return symbol("[",  LBRACKET); }
+"]"               { return symbol("]",  RBRACKET); }
 "*"               { return symbol("*",  MULTIPLY); }
 ";"               { return symbol(";",  SEMICOLON); }
 "="               { return symbol("=", EQUAL); }

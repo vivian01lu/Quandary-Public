@@ -1,12 +1,22 @@
 package ast;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class QObj extends QVal{
     public QVal left;
     public QVal right;
+    AtomicBoolean lock = new AtomicBoolean(false);
     //constructor
     public QObj(QVal left, QVal right) {
         this.left = left;
         this.right = right;
+    }
+    public void acq() {
+        while (!this.lock.compareAndSet(false, true)) {}
+    }
+
+    public void rel() {
+        this.lock.compareAndSet(true, false);
     }
     //get left and right
     public QVal getLeft() {
@@ -16,6 +26,7 @@ public class QObj extends QVal{
     public QVal getRight() {
         return this.right;
     }
+
 
 
     public String toString() {

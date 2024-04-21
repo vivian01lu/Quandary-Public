@@ -33,6 +33,7 @@ terminal LE, GE, EQ, NE, LT, GT, AND, OR, NOT;
 terminal Long    INTCONST;
 terminal String   IDENT;
 terminal IF, ELSE, WHILE, EQUAL, LBRACE, RBRACE;
+terminal LBRACKET, RBRACKET;
 terminal INT, Q, REF, CAST;
 
 
@@ -169,6 +170,8 @@ expr ::=  NIL:n
          {: RESULT = new UnaryMinusExpr(e, loc(eleft, eright)); :}
       |  LPAREN expr:e RPAREN
          {: RESULT = e; :}
+      |  LBRACKET binaryExpr:e RBRACKET
+         {: RESULT = new ConcurExpr(e, loc(eleft, eright)); :}
       |  funcCallExpr:fce
          {: RESULT = fce; :}
       |  LPAREN type:t RPAREN expr:e
