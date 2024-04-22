@@ -25,6 +25,7 @@ public class DeclStmt extends Stmt {
         // Extract information from the declaration statement
         String varName = this.getVarDecl().getIdent().toString();
         Expr expr = this.getExpr();
+        //System.out.println("DeclStmt: " + varName);
         QVal value = expr.execute(variableMap, funcDefMap);
         //if the stmt is "int a  = arg" then put "a"-"18" to the hashmap
         variableMap.put(varName,value);

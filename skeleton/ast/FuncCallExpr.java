@@ -63,6 +63,7 @@ public class FuncCallExpr extends Expr {
                 //setLeft(e1,e2) sets the left field of the reference e1 to the value of e2
                 Expr e1 = arguments.get(0);
                 Expr e2 = arguments.get(1);
+
                 return Interpreter.setLeft(e1, e2 ,variableMap ,funcDefMap);
               
             }else if(this.getFuncName().equals("setRight")){
@@ -85,7 +86,5 @@ public class FuncCallExpr extends Expr {
             
             return curFucDef.execute(funcDefMap, paramlist);  
     }
-
-   
 }
     

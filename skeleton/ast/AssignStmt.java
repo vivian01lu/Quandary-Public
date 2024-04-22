@@ -23,6 +23,7 @@ public class AssignStmt extends Stmt {
         // Extract information from the assignment statement
         String ident = this.getIdent();
         Expr expr = this.getExpr();
+//        System.out.println("assign statement " + ident);
         QVal value = expr.execute(variableMap, funcDefMap);
 
         variableMap.put(ident, value);

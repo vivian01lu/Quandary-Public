@@ -1,0 +1,18 @@
+Starting threads 1
+Starting threads 2
+joining threads 1
+Thread ID: 1
+Thread ID: 2
+Starting threads 1
+Starting threads 2
+Thread ID: 1
+Starting threads 1
+joining threads 1
+Thread ID: 2
+Starting threads 2
+Thread ID: 1
+joining threads 1
+Thread ID: 2
+0
+0
+(1 . 0)

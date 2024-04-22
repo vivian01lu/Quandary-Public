@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
+import java.util.concurrent.Semaphore;
 
 import parser.ParserWrapper;
 import ast.*;
@@ -27,14 +28,16 @@ public class Interpreter {
    
     static public Interpreter interpreter;
 
+    public static Semaphore semaphore = new Semaphore(1);
+
     public static Interpreter getInterpreter() {
         return interpreter;
     }
 
     public static void main(String[] args) {
-                    //  args = new String[2];
-                    //  args[0] = "examples/steps6.q";
-                    //  args[1] = "1";
+                        // args = new String[2];
+                        // args[0] = "examples/steps6.q";
+                        // args[1] = "1";
 
         String gcType = "NoGC"; // default for skeleton, which only supports NoGC
         long heapBytes = 1 << 14;
@@ -149,13 +152,17 @@ public class Interpreter {
 	}
 
     static  public QInt setLeft (Expr e1, Expr e2,HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        semaphore.acquireUninterruptibly();
         QRef ref = (QRef)e1.execute(variableMap, funcDefMap);
         ref.referent.left = e2.execute(variableMap, funcDefMap);
+        semaphore.release();
         return new QInt(1);
     }
     static public QInt setRight (Expr e1, Expr e2,HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
+        semaphore.acquireUninterruptibly();
         QRef ref = (QRef)e1.execute(variableMap, funcDefMap);
         ref.referent.right = e2.execute(variableMap, funcDefMap);
+        semaphore.release();
         return new QInt(1);
     }
 
@@ -181,13 +188,30 @@ public class Interpreter {
     }
 
     static public QInt randomInt(Expr e,HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
+        int range;
         if (e instanceof ConstExpr){
             ConstExpr constExpr = (ConstExpr)e;
-            Long val = constExpr.getValue();  
+            Long val = constExpr.getValue();
+            range = val.intValue();
+            //System.out.println(val);
             
             Random rand = new Random();
             int randomNum = rand.nextInt(Integer.parseInt(val.toString() ));
+            System.out.println(randomNum);
             return new QInt(randomNum);//return a random number
+        } else if (e instanceof IdentExpr){
+            IdentExpr identExpr = (IdentExpr)e;
+            String ident = identExpr.getValue();
+            QVal qVal = variableMap.get(ident);
+            if(qVal instanceof QInt){
+                QInt qInt = (QInt)qVal;
+                range = qInt.getValue().intValue();
+                Random rand = new Random();
+                int randomNum = rand.nextInt(Integer.parseInt(qInt.getValue().toString() ));
+                return new QInt(randomNum);//return a random number
+            }
+
+
         }
         return new QInt(0);
     }
@@ -203,15 +227,28 @@ public class Interpreter {
     }
 
     static public QInt acq(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
+        //System.out.println(variableMap);
         QRef q1 = (QRef)e.execute(variableMap, funcDefMap);
         QObj obj = q1.referent;
         obj.acq();
+        try {
+            //Thread.sleep(30000);
+        }
+        catch (Exception ex) {
+
+        }
         return new QInt(1);
     }
     static public QInt rel(Expr e, HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap){
         QRef q2 = (QRef)e.execute(variableMap, funcDefMap);
         QObj obj = q2.referent;
         obj.rel();
+        try {
+            //Thread.sleep(30000);
+        }
+        catch (Exception ex) {
+
+        }
         return new QInt(1);
     }
 }

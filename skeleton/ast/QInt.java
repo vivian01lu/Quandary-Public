@@ -14,7 +14,7 @@ public class QInt extends QVal{
 
     //get the long value:
     public Long getValue() {
-        return value;
+        return this.value;
     }
     //toString()
     public String toString() {

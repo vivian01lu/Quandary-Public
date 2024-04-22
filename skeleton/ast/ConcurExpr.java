@@ -15,28 +15,29 @@ public class ConcurExpr extends Expr{
     //execute the concurrent expression
     public QVal executeConcurrency(HashMap<String, QVal> variableMap, HashMap<String, FuncDef> funcDefMap) {
       //get the binary expression from the concurrent expression
-        BinaryExpr binaryExpr = this.getExpr();
-       //create two threads to execute using QThread
-       QVal l1=  binaryExpr.getLeftExpr().execute(variableMap,funcDefMap);
-        QVal l2 =binaryExpr.getRightExpr().execute(variableMap,funcDefMap);
-
-        QThread t1 = new QThread(binaryExpr.getLeftExpr(), variableMap, funcDefMap);
-        QThread t2 = new QThread(binaryExpr.getRightExpr(), variableMap, funcDefMap);
+        QThread t1 = new QThread(e, variableMap, funcDefMap,1);
+        QThread t2 = new QThread(e, variableMap, funcDefMap,2);
          //start the threads
+         System.out.println("Starting threads 1");
          t1.start();
+         System.out.println("Starting threads 2");
          t2.start();
         //join the threads
         try {
+            System.out.println("joining threads 1");
             t1.join();
+            System.out.println("joining threads 2");
             t2.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        QVal leftVal = t1.getResult();
-        QVal rightVal = t2.getResult();
-       
+
+        System.out.println("threads completes");
+        QVal leftVal = t1.getFirstQVal();
+        QVal rightVal = t2.getSecondQVal();
+      
         //return the result of the concurrent expression
-        switch (binaryExpr.getOperator()) {
+        switch (e.getOperator()) {
             case 1:
                 //plus operator   
                 QInt left = (QInt)leftVal;

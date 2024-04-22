@@ -25,6 +25,7 @@ public class IfStmt extends Stmt {
         boolean conditionValueResult = cond.execute(variableMap, funcDefMap);
 
         if(conditionValueResult){
+
             result = stmt.execute(variableMap, funcDefMap, returnStatus);
         }
         return result;
